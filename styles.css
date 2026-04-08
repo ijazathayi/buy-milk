@@ -19,3 +19,6 @@ th, td {
 .peices-inps {
     width: 80%;
 }
+.wholesaleprice {
+    display: none;
+}
