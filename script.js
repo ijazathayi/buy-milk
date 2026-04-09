@@ -10,7 +10,9 @@ function calculate() {
         { qtyId: '180ml', priceId: '180mlwholesaleprice', totalId: '180mltotal' },
         { qtyId: '115ml', priceId: '115mlwholesaleprice', totalId: '115mltotal' },
         { qtyId: 'halflitrec', priceId: 'halflitrecwholesaleprice', totalId: 'halflitrectotal' },
-        { qtyId: '110mlc', priceId: '110mlcwholesaleprice', totalId: '110mlctotal' }
+        { qtyId: '110mlc', priceId: '110mlcwholesaleprice', totalId: '110mlctotal' },
+        { qtyId: '85mlc', priceId: '85mlcwholesaleprice', totalId: '85mlctotal' },
+        { qtyId: '10rsl', priceId: '10rslwholesaleprice', totalId: '10rsltotal' },
     ];
 
     let grandTotalPieces = 0;
