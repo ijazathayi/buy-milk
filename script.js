@@ -2,6 +2,7 @@ function calculate() {
     // 1. Use parseFloat to keep decimal values
     const getVal = (id) => parseFloat(document.getElementById(id).value) || 0;
     const getPrice = (id) => parseFloat(document.getElementById(id).innerText.replace("₹", "")) || 0;
+    const today = new Date().toLocaleDateString();
 
     const items = [
         { qtyId: 'onelitre', priceId: 'onelitrewholesaleprice', totalId: 'onelitretotal' },
@@ -34,3 +35,44 @@ function calculate() {
     document.getElementById("total-price").innerText = "₹" + grandTotalPrice.toFixed(2);
 }
 
+async function downloadTableImage() {
+    const originalTable = document.getElementById('myTable');
+
+    // 1. Clone the table
+    const tableClone = originalTable.cloneNode(true);
+
+    // 2. Style the clone so it's ready for the "photo"
+    tableClone.style.width = "350px";
+    tableClone.style.position = "absolute";
+    tableClone.style.top = "-9999px";
+    document.body.appendChild(tableClone);
+
+    // 3. Remove columns 5 and 6 (Index 4 and 5) from the clone
+    const rows = tableClone.querySelectorAll('tr');
+    rows.forEach(row => {
+        // We delete the higher index first so the order doesn't shift
+        // if (row.cells.length > 4) row.deleteCell(4);
+        if (row.cells.length > 1) row.deleteCell(1);
+    });
+
+    try {
+        // 4. Convert the hidden clone to a Canvas
+        const canvas = await html2canvas(tableClone, {
+            backgroundColor: "#ffffff",
+            scale: 2 // Keeps the image crisp
+        });
+
+        // Cleanup: Remove the clone from the DOM
+        document.body.removeChild(tableClone);
+
+        // 5. Trigger the download automatically
+        const link = document.createElement('a');
+        link.download = `Milk_Bill_${new Date().toLocaleDateString()}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+
+    } catch (error) {
+        console.error("Error generating image:", error);
+        alert("Could not generate image.");
+    }
+}

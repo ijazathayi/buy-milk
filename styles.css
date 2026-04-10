@@ -1,24 +1,70 @@
-#buy-milk-body{
+#buy-milk-body {
     height: 90vh;
     width: 90vw;
     display: flex;
     justify-content: center;
     align-items: center;
     transform: translate(5%, -5%);
+    font-family: sans-serif;
+    padding: 20px;
+    background-color: #f4f4f9;
+    flex-direction: column;
 
 }
-    table, th, td {
-    border: 1px solid black;
+
+
+
+table,
+th,
+td {
     border-collapse: collapse;
 
 }
-th, td {
+
+th,
+td {
     padding: 5px;
     text-align: center;
+    border: 1px solid #ddd;
 }
+
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+
+table {
+    border-collapse: collapse;
+    background: white;
+    margin-bottom: 20px;
+}
+
+
+
+
+
 .peices-inps {
     width: 80%;
+    text-align: center;
 }
-.wholesaleprice {
+
+/* .wholesaleprice {
     display: none;
+} */
+
+
+.download-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.download-btn:hover {
+    background-color: #0056b3;
 }
