@@ -1,8 +1,11 @@
+    const today = new Date().toLocaleDateString();
+    const dateTh = document.getElementById("dateth").innerHTML = today;
+
 function calculate() {
     // 1. Use parseFloat to keep decimal values
     const getVal = (id) => parseFloat(document.getElementById(id).value) || 0;
     const getPrice = (id) => parseFloat(document.getElementById(id).innerText.replace("₹", "")) || 0;
-    const today = new Date().toLocaleDateString();
+
 
     const items = [
         { qtyId: 'onelitre', priceId: 'onelitrewholesaleprice', totalId: 'onelitretotal' },
