@@ -17,6 +17,8 @@ function calculate() {
         { qtyId: '110mlc', priceId: '110mlcwholesaleprice', totalId: '110mlctotal' },
         { qtyId: '85mlc', priceId: '85mlcwholesaleprice', totalId: '85mlctotal' },
         { qtyId: '10rsl', priceId: '10rslwholesaleprice', totalId: '10rsltotal' },
+        { qtyId: '200mlc', priceId: '200mlcwholesaleprice', totalId: '200mlctotal' },
+        { qtyId: '180mlb', priceId: '180mlbwholesaleprice', totalId: '180mlbtotal' }
     ];
 
     let grandTotalPieces = 0;
