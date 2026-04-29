@@ -90,6 +90,10 @@ a {
     text-decoration: none;
 }
 
+#buttons {
+    display: flex;
+    gap: 10px;
+}
 
 
 

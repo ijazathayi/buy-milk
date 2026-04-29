@@ -34,7 +34,7 @@ function calculate() {
 
         grandTotalPieces += qty;
         grandTotalPrice += rowTotal;
-    });
+    }); 
 
     document.getElementById("total-peices").innerText = grandTotalPieces;
     document.getElementById("total-price").innerText = "₹" + grandTotalPrice.toFixed(2);
@@ -79,5 +79,30 @@ async function downloadTableImage() {
     } catch (error) {
         console.error("Error generating image:", error);
         alert("Could not generate image.");
+    }
+}
+
+function shareTableImage() {
+// i want in this funcrtion to share the table image on whatsapp and other social media platforms using the web share api if available, otherwise fallback to download the image
+    if (navigator.share) {
+        // If Web Share API is supported, we can share the image directly
+        downloadTableImage().then(imageBlob => {
+            const file = new File([imageBlob], `Milk_Bill_${new Date().toLocaleDateString()}.png`, { type: 'image/png' });
+            navigator.share({
+                title: 'Milk Bill',
+                text: 'Here is the milk bill for today.',
+                files: [file]
+            }).catch(error => {
+                console.error("Error sharing:", error);
+                alert("Could not share the image.");
+            });
+        }).catch(error => {
+            console.error("Error generating image for sharing:", error);
+            alert("Could not generate image for sharing.");
+        }
+        );
+    } else {
+        // Fallback to download if Web Share API is not supported
+        downloadTableImage();
     }
 }
