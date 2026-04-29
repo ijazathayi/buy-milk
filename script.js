@@ -101,8 +101,24 @@ async function generateCanvas() {
         scale: 2
     });
 
+<<<<<<< HEAD
     document.body.removeChild(tableClone);
     return canvas;
+=======
+        // Cleanup: Remove the clone from the DOM
+        // document.body.removeChild(tableClone);
+
+        // 5. Trigger the download automatically
+        const link = document.createElement('a');
+        link.download = `Milk_Bill_${new Date().toLocaleDateString()}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+
+    } catch (error) {
+        console.error("Error generating image:", error);
+        alert("Could not generate image.");
+    }
+>>>>>>> e49b43cf1ca4ff2db69d9dc7783cfbc8fb87eba1
 }
 
 // Keep your original download logic, but use the new helper
