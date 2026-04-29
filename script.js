@@ -68,7 +68,7 @@ async function downloadTableImage() {
         });
 
         // Cleanup: Remove the clone from the DOM
-        document.body.removeChild(tableClone);
+        // document.body.removeChild(tableClone);
 
         // 5. Trigger the download automatically
         const link = document.createElement('a');
