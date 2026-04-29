@@ -101,8 +101,9 @@ function shareTableImage() {
             alert("Could not generate image for sharing.");
         }
         );
-    } else {
-        // Fallback to download if Web Share API is not supported
-        downloadTableImage();
-    }
+    } 
+    // else {
+    //     // Fallback to download if Web Share API is not supported
+    //     downloadTableImage();
+    // }
 }
