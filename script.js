@@ -40,70 +40,130 @@ function calculate() {
     document.getElementById("total-price").innerText = "₹" + grandTotalPrice.toFixed(2);
 }
 
-async function downloadTableImage() {
-    const originalTable = document.getElementById('myTable');
+// async function downloadTableImage() {
+//     const originalTable = document.getElementById('myTable');
 
-    // 1. Clone the table
+//     // 1. Clone the table
+//     const tableClone = originalTable.cloneNode(true);
+
+//     // 2. Style the clone so it's ready for the "photo"
+//     tableClone.style.width = "350px";
+//     tableClone.style.position = "absolute";
+//     tableClone.style.top = "-9999px";
+//     document.body.appendChild(tableClone);
+
+//     // 3. Remove columns 5 and 6 (Index 4 and 5) from the clone
+//     const rows = tableClone.querySelectorAll('tr');
+//     rows.forEach(row => {
+//         // We delete the higher index first so the order doesn't shift
+//         // if (row.cells.length > 4) row.deleteCell(4);
+//         if (row.cells.length > 1) row.deleteCell(1);
+//     });
+
+//     try {
+//         // 4. Convert the hidden clone to a Canvas
+//         const canvas = await html2canvas(tableClone, {
+//             backgroundColor: "#ffffff",
+//             scale: 2 // Keeps the image crisp
+//         });
+
+//         // Cleanup: Remove the clone from the DOM
+//         // document.body.removeChild(tableClone);
+
+//         // 5. Trigger the download automatically
+//         const link = document.createElement('a');
+//         link.download = `Milk_Bill_${new Date().toLocaleDateString()}.png`;
+//         link.href = canvas.toDataURL("image/png");
+//         link.click();
+
+//     } catch (error) {
+//         console.error("Error generating image:", error);
+//         alert("Could not generate image.");
+//     }
+// }
+
+async function generateCanvas() {
+    const originalTable = document.getElementById('myTable');
     const tableClone = originalTable.cloneNode(true);
 
-    // 2. Style the clone so it's ready for the "photo"
     tableClone.style.width = "350px";
     tableClone.style.position = "absolute";
     tableClone.style.top = "-9999px";
     document.body.appendChild(tableClone);
 
-    // 3. Remove columns 5 and 6 (Index 4 and 5) from the clone
     const rows = tableClone.querySelectorAll('tr');
     rows.forEach(row => {
-        // We delete the higher index first so the order doesn't shift
-        // if (row.cells.length > 4) row.deleteCell(4);
         if (row.cells.length > 1) row.deleteCell(1);
     });
 
-    try {
-        // 4. Convert the hidden clone to a Canvas
-        const canvas = await html2canvas(tableClone, {
-            backgroundColor: "#ffffff",
-            scale: 2 // Keeps the image crisp
-        });
+    const canvas = await html2canvas(tableClone, {
+        backgroundColor: "#ffffff",
+        scale: 2
+    });
 
-        // Cleanup: Remove the clone from the DOM
-        // document.body.removeChild(tableClone);
-
-        // 5. Trigger the download automatically
-        const link = document.createElement('a');
-        link.download = `Milk_Bill_${new Date().toLocaleDateString()}.png`;
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-
-    } catch (error) {
-        console.error("Error generating image:", error);
-        alert("Could not generate image.");
-    }
+    document.body.removeChild(tableClone);
+    return canvas;
 }
 
-function shareTableImage() {
-// i want in this funcrtion to share the table image on whatsapp and other social media platforms using the web share api if available, otherwise fallback to download the image
-    if (navigator.share) {
-        // If Web Share API is supported, we can share the image directly
-        downloadTableImage().then(imageBlob => {
-            const file = new File([imageBlob], `Milk_Bill_${new Date().toLocaleDateString()}.png`, { type: 'image/png' });
-            navigator.share({
-                title: 'Milk Bill',
-                text: 'Here is the milk bill for today.',
-                files: [file]
-            }).catch(error => {
-                console.error("Error sharing:", error);
-                alert("Could not share the image.");
-            });
-        }).catch(error => {
-            console.error("Error generating image for sharing:", error);
-            alert("Could not generate image for sharing.");
-        }
-        );
-    } 
-    // else {
-    //     // Fallback to download if Web Share API is not supported
-    //     downloadTableImage();
-    // }
+// Keep your original download logic, but use the new helper
+async function downloadTableImage() {
+    const canvas = await generateCanvas();
+    const link = document.createElement('a');
+    link.download = `Milk_Bill_${new Date().toLocaleDateString()}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+}
+
+// function shareTableImage() {
+// // i want in this funcrtion to share the table image on whatsapp and other social media platforms using the web share api if available, otherwise fallback to download the image
+//     if (navigator.share) {
+//         // If Web Share API is supported, we can share the image directly
+//         downloadTableImage().then(imageBlob => {
+//             const file = new File([imageBlob], `Milk_Bill_${new Date().toLocaleDateString()}.png`, { type: 'image/png' });
+//             navigator.share({
+//                 title: 'Milk Bill',
+//                 text: 'Here is the milk bill for today.',
+//                 files: [file]
+//             }).catch(error => {
+//                 console.error("Error sharing:", error);
+//                 alert("Could not share the image.");
+//             });
+//         }).catch(error => {
+//             console.error("Error generating image for sharing:", error);
+//             alert("Could not generate image for sharing.");
+//         }
+//         );
+//     } 
+//     // else {
+//     //     // Fallback to download if Web Share API is not supported
+//     //     downloadTableImage();
+//     // }
+// }
+async function shareTableImage() {
+    try {
+        const canvas = await generateCanvas();
+        
+        // Convert canvas to Blob (File object)
+        canvas.toBlob(async (blob) => {
+            const file = new File([blob], `Milk_Bill.png`, { type: 'image/png' });
+
+            // Check if the browser supports sharing FILES
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                await navigator.share({
+                    files: [file],
+                    title: 'Milk Bill',
+                    // text: 'Shared from Buy Milk App',
+                });
+            } else {
+                // Fallback: Just download if sharing isn't supported
+                alert("Sharing not supported on this browser. Downloading instead...");
+                downloadTableImage();
+            }
+        }, 'image/png');
+
+    } catch (error) {
+        console.error("Sharing failed:", error);
+        // Fallback to download on error
+        downloadTableImage();
+    }
 }
