@@ -111,7 +111,6 @@ th {
     width: clamp(48px, 8vw, 70px);
     text-align: center;
     font-size: clamp(11px, 2vw, 14px);
-    padding: 2px 4px;
     border: 1px solid #ccc;
     border-radius: 3px;
 }

@@ -57,11 +57,16 @@ async function generateCanvas() {
     wrapperClone.style.padding = "0";
     document.body.appendChild(wrapperClone);
 
-    // Sync live input values from original into clone
+    // Replace each input in the clone with a plain text span showing the value
     const originalInputs = originalTable.querySelectorAll('input');
     const cloneInputs = tableClone.querySelectorAll('input');
     originalInputs.forEach((input, i) => {
-        cloneInputs[i].value = input.value;
+        const span = document.createElement('span');
+        span.textContent = input.value;
+        span.style.display = 'block';
+        span.style.textAlign = 'center';
+        span.style.fontSize = 'inherit';
+        cloneInputs[i].parentNode.replaceChild(span, cloneInputs[i]);
     });
 
     // Fix table width inside the clone
@@ -75,8 +80,8 @@ async function generateCanvas() {
     const sectionHeaderRows = [];
 
     rows.forEach(row => {
-        const input = row.querySelector('input[type="number"]');
-        const isItemRow = !!input;
+        const span = row.querySelector('td > span');
+        const isItemRow = !!span;
         const thEl = row.querySelector('th[colspan]');
         const isSectionHeader = !isItemRow && thEl &&
             parseInt(thEl.getAttribute('colspan')) > 1 &&
@@ -91,11 +96,11 @@ async function generateCanvas() {
         }
     });
 
-    // Hide zero-qty item rows
+    // Hide zero-qty item rows (inputs are now replaced with spans)
     rows.forEach(row => {
-        const input = row.querySelector('input[type="number"]');
-        if (input) {
-            const qty = parseFloat(input.value) || 0;
+        const span = row.querySelector('td > span');
+        if (span) {
+            const qty = parseFloat(span.textContent) || 0;
             if (qty === 0) row.style.display = 'none';
         }
     });
