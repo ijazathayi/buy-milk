@@ -13,10 +13,23 @@
 </head>
 
 <body id="buy-milk-body">
+
+    <!-- This wrapper is what gets captured as the image -->
+    <div id="bill-wrapper">
+
+        <!-- Professional Shop Header -->
+        <div id="shop-header">
+            <div id="shop-name">S.K.M STORES</div>
+            <div id="shop-tagline">🥛 Fresh Dairy &amp; Products</div>
+            <div id="shop-divider"></div>
+            <div id="bill-date"></div>
+        </div>
+
+    <div class="table-scroll">
     <table id="myTable">
-            <tr>
+            <tr style="display:none;">
                 <th id="dateth"></th>
-                <th colspan="4"></th>
+                <th colspan="3"></th>
             </tr>
             <tr>
                 <th colspan="5">Milk</th>
@@ -132,6 +145,8 @@
                 <td id="total-price">₹0.00</td>
             </tr>
         </table>
+    </div><!-- end .table-scroll -->
+    </div><!-- end #bill-wrapper -->
         
         <section id="buttons">
             <button class="download-btn" onclick="downloadTableImage()">Download</button>
@@ -141,10 +156,13 @@
 
         
 
-        <span id="myline">developed by <a href="https://ijaz-portfolio.great-site.net/?i=1" target="_blank">
-            <!-- IJAZ ATHAYI -->
-             <img src="mylogo.png" alt="IJAZ ATHAYI" class="mylogo" height="25px">
-        </a></span>
+        <span id="myline">
+            <span id="myline-label">crafted by</span>
+            <a href="https://ijaz-portfolio.great-site.net/?i=1" target="_blank" id="myline-link">
+                <img src="mylogo.png" alt="IJAZ ATHAYI" class="mylogo" height="24px">
+                <span id="myline-name">IJAZ ATHAYI</span>
+            </a>
+        </span>
 
         <script src="script.js"></script>
     </body>

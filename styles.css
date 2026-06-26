@@ -1,104 +1,256 @@
+/* ── Reset ── */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+/* ── Body ── */
 #buy-milk-body {
-    height: 110vh;
-    width: 100vw;
+    min-height: 100dvh;
+    width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    padding: 24px 16px 80px; /* bottom pad keeps content above the fixed badge */
     font-family: sans-serif;
     background-color: #f4f4f9;
     flex-direction: column;
-    position: relative;
+    align-items: center;
     overflow-x: hidden;
-
 }
 
+/* ── Bill Wrapper (captured as image) ── */
+#bill-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #ffffff;
+    width: min(60%, 680px);
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.10);
+    border-radius: 6px;
+    overflow: hidden;
+}
 
+/* ── Shop Header ── */
+#shop-header {
+    width: 100%;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: #ffffff;
+    text-align: center;
+    padding: 16px 12px 12px;
+}
 
+#shop-name {
+    font-size: clamp(16px, 4vw, 24px);
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-family: 'Georgia', serif;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+#shop-tagline {
+    font-size: clamp(10px, 2.5vw, 13px);
+    letter-spacing: 1.5px;
+    margin-top: 4px;
+    opacity: 0.9;
+    font-style: italic;
+}
+
+#shop-divider {
+    width: 50%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.4);
+    margin: 8px auto 6px;
+}
+
+#bill-date {
+    font-size: clamp(10px, 2vw, 12px);
+    opacity: 0.85;
+    letter-spacing: 0.5px;
+}
+
+/* ── Table scroll wrapper for small screens ── */
+.table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ── Table ── */
 table,
 th,
 td {
     border-collapse: collapse;
+}
 
+table {
+    background: white;
+    margin-bottom: 0;
+    width: 100%;
+    min-width: 320px;
 }
 
 th,
 td {
-    padding: 5px;
+    padding: clamp(4px, 1.5vw, 8px) clamp(4px, 1vw, 6px);
     text-align: center;
     border: 1px solid #ddd;
+    font-size: clamp(11px, 2vw, 14px);
+    white-space: nowrap;
 }
-
 
 th {
     background-color: #007bff;
     color: white;
 }
 
-
-table {
-    border-collapse: collapse;
-    background: white;
-    margin-bottom: 20px;
-    width: 60%;
-}
-
-
-
-
-
 .peices-inps {
-    width: 80%;
+    width: clamp(48px, 8vw, 70px);
     text-align: center;
+    font-size: clamp(11px, 2vw, 14px);
+    padding: 2px 4px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
 
-/* .wholesaleprice {
-    display: none;
-} */
-
+/* ── Buttons ── */
+#buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 16px;
+}
 
 .download-btn {
-    padding: 10px 20px;
+    padding: clamp(8px, 2vw, 10px) clamp(16px, 4vw, 24px);
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
+    font-size: clamp(13px, 2.5vw, 15px);
+    transition: background-color 0.2s, transform 0.15s;
+    touch-action: manipulation;
 }
 
 .download-btn:hover {
     background-color: #0056b3;
 }
 
-
-
-#myline {
-    font-size: 12px;
-    color: #555;
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    /* text-align: center; */
+.download-btn:active {
+    transform: scale(0.97);
 }
+
+/* ── Developer Badge (bottom-right) ── */
+#myline {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255, 255, 255, 0.90);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 123, 255, 0.20);
+    border-radius: 999px;
+    padding: 5px 14px 5px 7px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+    transition: box-shadow 0.2s, transform 0.2s;
+    z-index: 999;
+}
+
+#myline:hover {
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.20);
+    transform: translateY(-2px);
+}
+
+#myline-label {
+    font-size: 10px;
+    color: #aaa;
+    letter-spacing: 0.4px;
+    text-transform: lowercase;
+    font-style: italic;
+    user-select: none;
+}
+
+#myline-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+}
+
+#myline-link .mylogo {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1.5px solid #007bff;
+    object-fit: cover;
+    display: block;
+}
+
+#myline-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: #007bff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Georgia', serif;
+}
+
+/* ── General links ── */
 a {
     color: #007bff;
     text-decoration: none;
 }
 
-#buttons {
-    display: flex;
-    gap: 10px;
+/* ── Responsive breakpoints ── */
+
+/* Tablet */
+@media (max-width: 768px) {
+    #bill-wrapper {
+        width: 90%;
+    }
 }
 
+/* Mobile */
+@media (max-width: 480px) {
+    #buy-milk-body {
+        padding: 16px 8px 80px;
+    }
 
+    #bill-wrapper {
+        width: 100%;
+        border-radius: 4px;
+    }
 
-@media (max-width: 600px) {
- table{
-        width: 90%;
- }
+    #shop-name {
+        letter-spacing: 2px;
+    }
+
+    #buttons {
+        width: 100%;
+        gap: 8px;
+    }
+
+    .download-btn {
+        flex: 1;
+        min-width: 120px;
+    }
+
+    /* Collapse badge to just the logo on very small screens */
+    #myline-label,
+    #myline-name {
+        display: none;
+    }
+
+    #myline {
+        padding: 5px 8px;
+    }
 }
